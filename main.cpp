@@ -3,8 +3,6 @@
 #include <vector>
 #include <iomanip>
 #include "Aircraft.cpp"
-#include "Seat.cpp"
-#include "Time.cpp"
 
 using namespace std;
 
