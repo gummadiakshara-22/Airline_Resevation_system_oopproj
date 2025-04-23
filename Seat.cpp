@@ -47,9 +47,6 @@ public:
 
     string getReservationNumber() const { return reservation_number; }
     int getSeatNumber() const { return seat_number; }
-    string getindex(string pnr){
-        return reservation_number;
-    }
     void displayDetails(bool isEconomy)  {
         cout << "Passenger Name: " << passenger.get_passengername() << endl;
         cout << "Passenger Age: " << passenger.get_passengerage() << endl;
