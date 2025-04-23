@@ -2,6 +2,7 @@
 #include<fstream>
 #include<string>
 #include<vector>
+#include <iomanip>
 #include "Seat.cpp"
 #include "Time.cpp"
 using namespace std;
@@ -36,7 +37,7 @@ class Aircraft {
             string password;
             cout << "Enter Manager Password: ";
             cin >> password;
-            if (password != "UST") {
+            if (password != "OOP") {
                 cout << "Invalid Password!" << endl;
                 return;
             }
@@ -85,6 +86,10 @@ class Aircraft {
             int choice;
             cout << "Enter 1 for Business Class, 2 for Economy Class: ";
             cin >> choice;
+            if(choice != 1 && choice != 2) {
+                cout << "Invalid choice. Please try again.\n";
+                return;
+            }
     
             if (choice == 1 && availableBusinessSeats > 0) {
                 for (auto &seat : businessClassSeats) {
@@ -106,9 +111,9 @@ class Aircraft {
                 cout << "No seats available in the selected class.\n";
             }
         }
-    virtual void generateBookingSummary(string pnr) const {
+    virtual void generateBookingSummary(string pnr)  {
         bool found = false;
-        string fileName = ID + "_BookingSummary.txt";
+        string fileName = pnr + "_BookingSummary.txt";
         ofstream outFile(fileName);
 
         if (!outFile) {
@@ -119,7 +124,7 @@ class Aircraft {
         outFile<<"\t\t\t\t\t\t\tBooking Summary\n";
         outFile<<"***************************************************************************\n\n";
         outFile<<"Flight Name: " << Name << " - " << ID << "\n";
-         for (const auto &seat : businessClassSeats) {
+         for (auto &seat : businessClassSeats) {
             if (seat.isBooked() && seat.getReservationNumber() == pnr) {
                 found = true;
                 outFile<<"PNR: " << pnr << "\n";
@@ -127,11 +132,12 @@ class Aircraft {
                 outFile<<seat.getPassengerName()<<endl;
                 outFile<<"Age - "<<seat.getPassengerAge()<<endl;
                 outFile<<"Seat Type - Business"<<endl;
+                outFile<<"Seat Number - "<<seat.getSeatNumber()<<endl;
             }
         }
         if(!found) {
             
-         for (const auto &seat : economyClassSeats) {
+         for ( auto &seat : economyClassSeats) {
              if (seat.isBooked() && seat.getReservationNumber() == pnr) {
                     found = true;
                   outFile<<"PNR: " << pnr << "\n";
@@ -139,18 +145,22 @@ class Aircraft {
                   outFile<<seat.getPassengerName()<<endl;
                   outFile<<"Age - "<<seat.getPassengerAge()<<endl;
                   outFile<<"Seat Type - Economy"<<endl;
+                  outFile<<"Seat Number - "<<seat.getSeatNumber()<<endl;
              }
             }
         }
-        if(!found) {
-            outFile<<"PNR not found.\n";
-        }
-            outFile<<startingPoint<<"................."<<arrivalTime.getHours()-departureTime.getHours()<<"h"<<arrivalTime.getMinutes()-departureTime.getMinutes()<<"m................."<<destination<<endl;
+        if(found) {
+             outFile<<startingPoint<<"................."<<arrivalTime.getHours()-departureTime.getHours()<<"h"<<arrivalTime.getMinutes()-departureTime.getMinutes()<<"m................."<<destination<<endl;
             outFile<< setw(2) << setfill('0') <<departureTime.getHours()<<":"<< setw(2) << setfill('0') <<departureTime.getMinutes()<<"                                     "<< setw(2) << setfill('0') <<arrivalTime.getHours()<<":"<< setw(2) << setfill('0') <<arrivalTime.getMinutes()<<endl;
-            outFile<<departureTime.getDay()<<"\t\t\t\t\t\t\t"<<arrivalTime.getDay()<<endl; 
-        outFile.close();
-        cout << "Booking summary has been saved to " << fileName << "\n";
-    }
+            outFile<<departureTime.getDay()<<"\t\t\t\t\t\t\t\t\t"<<arrivalTime.getDay()<<endl; 
+            outFile.close();
+            cout << "Booking summary has been saved to " << fileName << "\n";
+        } else {
+            outFile.close();
+            remove(fileName.c_str()); // Delete the file if no booking found
+            cout << "No booking found with the provided PNR.\n";
+        }
+}
     
         virtual void cancelTicket(const string &reservationNumber) {
             for (auto &seat : businessClassSeats) {
