@@ -25,7 +25,7 @@ public:
         cin.ignore();
         string id;
         getline(cin, id);
-        if(id.size!=4)
+        if(id.size()!=4)
         {
             cout<<"Invalid Unique ID"<<endl;
         }
@@ -48,7 +48,7 @@ public:
     string getReservationNumber() const { return reservation_number; }
     int getSeatNumber() const { return seat_number; }
     int getindex(string pnr){
-        
+        return reservation_number;
     }
     void displayDetails(bool isEconomy)  {
         cout << "Passenger Name: " << passenger.get_passengername() << endl;
