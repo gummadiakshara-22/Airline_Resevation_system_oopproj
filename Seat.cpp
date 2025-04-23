@@ -25,10 +25,17 @@ public:
         cin.ignore();
         string id;
         getline(cin, id);
+        if(id.size!=4)
+        {
+            cout<<"Invalid Unique ID"<<endl;
+        }
+        else{
         passenger.setPassenger(p, a, id);
         booked = true;
         setReservationNumber(passenger);
-        cout << "Booking Confirmed. Your PNR is "<< reservation_number << endl;}
+        cout << "Booking Confirmed. Your PNR is "<< reservation_number << endl;
+            }
+        }
     void setReservationNumber(Passenger p){
         reservation_number = p.get_passengername().substr(0,3)+p.get_passengerid() ;
     }
