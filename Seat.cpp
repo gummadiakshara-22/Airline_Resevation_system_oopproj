@@ -47,7 +47,7 @@ public:
 
     string getReservationNumber() const { return reservation_number; }
     int getSeatNumber() const { return seat_number; }
-    int getindex(string pnr){
+    string getindex(string pnr){
         return reservation_number;
     }
     void displayDetails(bool isEconomy)  {
