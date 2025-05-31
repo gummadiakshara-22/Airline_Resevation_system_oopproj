@@ -37,7 +37,7 @@ public:
             }
         }
     void setReservationNumber(Passenger p){
-        reservation_number = p.get_passengername().substr(0,3)+p.get_passengerid() ;
+        reservation_number = p.get_passengername().substr(0,3) + seat_number ;
     }
     void unBookSeat() {
         passenger.setPassenger("NULL", 0 , "NULL");
