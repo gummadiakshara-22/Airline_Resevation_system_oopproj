@@ -21,26 +21,16 @@ public:
         cout << "Enter Passenger's Age: ";
         int a;
         cin >> a;
-        cout<<"Enter Passenger's Unique ID(up to 4char): ";
-        cin.ignore();
-        string id;
-        getline(cin, id);
-        if(id.size()!=4)
-        {
-            cout<<"Invalid Unique ID"<<endl;
-        }
-        else{
-        passenger.setPassenger(p, a, id);
+        passenger.setPassenger(p, a);
         booked = true;
         setReservationNumber(passenger);
         cout << "Booking Confirmed. Your PNR is "<< reservation_number << endl;
-            }
         }
     void setReservationNumber(Passenger p){
-        reservation_number = p.get_passengername().substr(0,3) + seat_number ;
+        reservation_number = p.get_passengername().substr(0,3) + to_string(seat_number);
     }
     void unBookSeat() {
-        passenger.setPassenger("NULL", 0 , "NULL");
+        passenger.setPassenger("NULL", 0 );
         booked = false;
         reservation_number = "";
     }
@@ -58,6 +48,5 @@ public:
     
     string getPassengerName()  { return passenger.get_passengername(); }
     int getPassengerAge()  { return passenger.get_passengerage(); }
-    string getPassengerID()  { return passenger.get_passengerid(); }
 
 };
